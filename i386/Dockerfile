@@ -4,10 +4,10 @@ RUN echo 'root:1234' | chpasswd
 
 FROM adoptopenjdk/openjdk11:alpine AS jdk
 WORKDIR /app
-RUN git clone https://github.com/AaronSoria/HelloFromJava.git && cd HelloFromJava/i386
+COPY ./HelloWorld.java .
 RUN javac HelloWorld.java
 
 FROM base-ubuntu
 WORKDIR /tmp
-COPY --from=jdk /app/HelloFromJava/i386 .
+COPY --from=jdk /app .
 CMD ["java", "HelloWorld"]
